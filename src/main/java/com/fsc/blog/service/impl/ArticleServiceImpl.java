@@ -1,10 +1,9 @@
-package com.fsc.blog.service;
+package com.fsc.blog.service.impl;
 
 import com.fsc.blog.entity.Article;
 import com.fsc.blog.mapper.ArticleMapper;
-import com.fsc.blog.service.impl.ArticleService;
+import com.fsc.blog.service.ArticleService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

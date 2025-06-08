@@ -2,6 +2,23 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="">
+<mapper namespace="com.fsc.blog.mapper.UserMapper">
+
+    <insert id="insertUser" parameterType="com.fsc.blog.entity.User" useGeneratedKeys="true" keyProperty="userId">
+        INSERT INTO users (username, pwd, created_at, is_delete)
+        VALUES (#{username}, #{pwd}, NOW(), 0)
+    </insert>
+
+    <select id="findUserByUsername" parameterType="string" resultType="com.fsc.blog.entity.User">
+        SELECT user_id, username, pwd, created_at, is_delete
+        FROM users
+        WHERE username = #{username} AND is_delete = 0;
+    </select>
+
+    <update id="deleteUser" parameterType="string">
+        UPDATE users
+        SET is_delete = 1
+        WHERE username = #{username}
+    </update>
 
 </mapper>

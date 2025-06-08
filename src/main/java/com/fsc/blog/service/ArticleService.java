@@ -1,4 +1,4 @@
-package com.fsc.blog.service.impl;
+package com.fsc.blog.service;
 
 import com.fsc.blog.entity.Article;
 
