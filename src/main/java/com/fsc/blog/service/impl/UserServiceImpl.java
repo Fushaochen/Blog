@@ -2,9 +2,14 @@ package com.fsc.blog.service.impl;
 
 import com.fsc.blog.entity.User;
 import com.fsc.blog.exception.ResourceNotFoundException;
+import com.fsc.blog.exception.dbSqlException;
 import com.fsc.blog.mapper.UserMapper;
 import com.fsc.blog.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -29,6 +34,13 @@ public class UserServiceImpl implements UserService {
     public User createUser(User user) {
         user.setIsDelete(0);
         user.setCreatedAt(LocalDateTime.now());
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodePwd = passwordEncoder.encode(user.getPwd());
+        user.setPwd(encodePwd);
+        User user1 = getUserByUsername(user.getUsername());
+        if (user1 != null){
+            throw new dbSqlException("The username: " + user.getUsername() + " already exists");
+        }
         userMapper.insertUser(user);
         return user;
     }
