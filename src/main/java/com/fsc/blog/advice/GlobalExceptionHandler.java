@@ -3,6 +3,7 @@ package com.fsc.blog.advice;
 import com.fsc.blog.resultResp.ErrorResponse;
 import com.fsc.blog.exception.ResourceNotFoundException;
 import com.fsc.blog.exception.dbSqlException;
+import com.fsc.blog.resultResp.Result;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -23,14 +24,12 @@ import java.time.LocalDateTime;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handlerResourceNotFoundException(ResourceNotFoundException ex){
-        ErrorResponse errorResponse = new ErrorResponse(404, ex.getMessage(), LocalDateTime.now());
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    public Result<Void> handlerResourceNotFoundException(ResourceNotFoundException ex){
+        return Result.fail(ex.getErrorCode(), ex.getMessage());
     }
 
     @ExceptionHandler(dbSqlException.class)
-    public ResponseEntity<ErrorResponse> handlerResourceNotFoundException(dbSqlException ex){
-        ErrorResponse errorResponse = new ErrorResponse(409, ex.getMessage(), LocalDateTime.now());
-        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    public Result<Void> handlerResourceNotFoundException(dbSqlException ex){
+        return Result.fail(ex.getErrorCode(), ex.getMessage());
     }
 }

@@ -1,6 +1,7 @@
 package com.fsc.blog.controller;
 
 import com.fsc.blog.entity.Article;
+import com.fsc.blog.resultResp.Result;
 import com.fsc.blog.service.ArticleService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,24 +28,20 @@ public class ArticleController {
     private final ArticleService articleService;
 
     @PostMapping
-    public ResponseEntity<Article> createArticle(@RequestBody Article article){
+    public Result<Article> createArticle(@RequestBody Article article){
         Article createdArticle = articleService.createArticle(article);
-        return new ResponseEntity<>(createdArticle, HttpStatus.CREATED);
+        return Result.ok(createdArticle);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Article> getArticleById(@PathVariable("id") Long id){
+    public Result<Article> getArticleById(@PathVariable("id") Long id){
         Article article = articleService.getArticleById(id);
-        if (article != null){
-            return ResponseEntity.ok(article);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return Result.ok(article);
     }
 
     @GetMapping
-    public ResponseEntity<List<Article>> getAllArticles(){
+    public Result<List<Article>> getAllArticles(){
         List<Article> articles = articleService.getAllArticles();
-        return ResponseEntity.ok(articles);
+        return Result.ok(articles);
     }
 }

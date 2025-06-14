@@ -1,7 +1,9 @@
 package com.fsc.blog.service.impl;
 
 import com.fsc.blog.entity.Article;
+import com.fsc.blog.exception.ResourceNotFoundException;
 import com.fsc.blog.mapper.ArticleMapper;
+import com.fsc.blog.resultResp.Code;
 import com.fsc.blog.service.ArticleService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -36,6 +38,9 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Article getArticleById(Long id) {
         Article article = articleMapper.findById(id);
+        if (article == null){
+            throw new ResourceNotFoundException(Code.ARTICLE_NOTFOUND);
+        }
         return article;
     }
 
