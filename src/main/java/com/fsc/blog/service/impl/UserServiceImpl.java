@@ -4,6 +4,7 @@ import com.fsc.blog.entity.User;
 import com.fsc.blog.exception.ResourceNotFoundException;
 import com.fsc.blog.exception.dbSqlException;
 import com.fsc.blog.mapper.UserMapper;
+import com.fsc.blog.resultResp.Code;
 import com.fsc.blog.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -39,7 +40,7 @@ public class UserServiceImpl implements UserService {
         user.setPwd(encodePwd);
         User user1 = getUserByUsername(user.getUsername());
         if (user1 != null){
-            throw new dbSqlException("The username: " + user.getUsername() + " already exists");
+            throw new dbSqlException(Code.SQL_FAIL);
         }
         userMapper.insertUser(user);
         return user;
@@ -49,7 +50,7 @@ public class UserServiceImpl implements UserService {
     public User getUserByUsername(String username) {
         User user = userMapper.findUserByUsername(username);
         if (user == null){
-            throw new ResourceNotFoundException("User not found with username: " + username);
+            throw new ResourceNotFoundException(Code.USERNAME_NOTFOUND);
         }
         return user;
     }
