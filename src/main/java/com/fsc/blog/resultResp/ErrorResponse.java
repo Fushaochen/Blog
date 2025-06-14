@@ -1,4 +1,4 @@
-package com.fsc.blog.errorResp;
+package com.fsc.blog.resultResp;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

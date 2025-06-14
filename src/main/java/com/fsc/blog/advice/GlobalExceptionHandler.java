@@ -1,6 +1,6 @@
 package com.fsc.blog.advice;
 
-import com.fsc.blog.errorResp.ErrorResponse;
+import com.fsc.blog.resultResp.ErrorResponse;
 import com.fsc.blog.exception.ResourceNotFoundException;
 import com.fsc.blog.exception.dbSqlException;
 import org.springframework.http.HttpStatus;
